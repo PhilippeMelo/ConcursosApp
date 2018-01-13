@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "302434525972",
+    "firebase_url": "https://concurseiros-5f42b.firebaseio.com",
+    "project_id": "concurseiros-5f42b",
+    "storage_bucket": "concurseiros-5f42b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302434525972:android:953e2999735d8709",
+        "android_client_info": {
+          "package_name": "com.concurseiros"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302434525972-vg25ao7e97q44avbdgdv468ekjeh4e4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc00CLrcfgcI6-z0A55GlZbjc75JKH_WE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
