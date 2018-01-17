@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -13,16 +7,33 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  AsyncStorage
 } from 'react-native';
 
 import Note from './src/components/Note';
 
 export default class App extends Component<{}> {
 
-  state = {
-    noteArray: [{'date': 'testDate', 'note': 'testNote 1'}],
-    noteText: '',
-  }
+    constructor(props, context) {
+      super(props, context);
+
+      let array = [];
+      
+      AsyncStorage.getItem('data').then((value) => {
+        if (value !== null){
+          array = JSON.parse(value);
+
+          this.setState({
+            noteArray: array,
+          })
+        }
+      });
+
+      this.state = {
+        noteArray: array,
+        noteText: '',
+      };
+    }
 
   render() {
 
@@ -50,7 +61,9 @@ export default class App extends Component<{}> {
          <View>
           <TextInput style={styles.TextInput}
              onChangeText={(noteText) => this.setState({noteText})} value={this.state.noteText}
-             placeholder='> nova tarefa...' placeholderTextColor='#adad85' underlineColorAndroid='transparent'>
+             placeholder=' > Nova tarefa...' 
+             placeholderTextColor='#737373' 
+             underlineColorAndroid='transparent'>
            </TextInput>
         </View>
 
@@ -64,12 +77,19 @@ export default class App extends Component<{}> {
       this.state.noteArray.push({'date': d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate(), 'note': this.state.noteText});
       this.setState({noteArray: this.state.noteArray});
       this.setState({noteText: ''});
+      
+      //add to AsyncStorage
+      AsyncStorage.setItem('data', JSON.stringify(this.state.noteArray));
+
     }
   }
 
   deleteNote(key){
     this.state.noteArray.splice(key, 1);
     this.setState({noteArray: this.state.noteArray});
+
+    //delete to AsyncStorage (add updated data)
+    AsyncStorage.setItem('data', JSON.stringify(this.state.noteArray));
   }
 }
 
@@ -78,7 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#E91E63',
+    backgroundColor: '#009900',
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 10,
@@ -87,7 +107,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: 'white',
     fontSize: 18,
-    padding: 26,
+    padding: 18,
   },
   scrollContainer: {
     flex: 1,
@@ -95,15 +115,16 @@ const styles = StyleSheet.create({
   },
   footer: {
     position: 'absolute',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     bottom: 0,
     left: 0,
     right: 0,
   },
   addButton: {
-    backgroundColor: '#E91E63',
-    width: 60,
-    height: 60,
+    marginRight: 20,
+    backgroundColor: '#009900',
+    width: 50,
+    height: 50,
     borderRadius: 50,
     borderColor: '#ccc',
     alignItems: 'center',
